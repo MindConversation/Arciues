@@ -10,20 +10,15 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest  # Use a Windows machine to compile the .exe
+    runs-on: windows-latest
 
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3  # Pull the code from your repository
 
-    - name: Install MinGW Compiler
-      run: |
-        choco install mingw -y  # Install MinGW for compiling C++ on Windows
-        set PATH=%PATH%;C:\tools\mingw64\bin
-
     - name: Build the Executable
       run: |
-        g++ -o Arcieus.exe Arcieus.cpp  # Compile your C++ file into an .exe
+        cl /EHsc Arcieus.cpp /Fe:Arcieus.exe  # Compile your C++ file into an .exe
         mkdir output
         move Arcieus.exe output/
 
