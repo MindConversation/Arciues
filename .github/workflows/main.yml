@@ -1,0 +1,29 @@
+name: Build C++ Executable
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3  # Pull the code from your repository
+
+    - name: Build the Executable
+      run: |
+        cl /EHsc Arcieus.cpp /Fe:Arcieus.exe  # Compile your C++ file into an .exe
+        mkdir output
+        move Arcieus.exe output/
+
+    - name: Upload the Executable
+      uses: actions/upload-artifact@v3  # Upload the .exe as an artifact
+      with:
+        name: Compiled-Arcieus
+        path: output/Arcieus.exe
